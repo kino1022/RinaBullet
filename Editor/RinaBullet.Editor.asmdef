@@ -1,5 +1,5 @@
 {
-    "name": "Editor",
+    "name": "RinaBullet.Editor",
     "rootNamespace": "RinaInput.Editor",
     "references": [],
     "includePlatforms": [],

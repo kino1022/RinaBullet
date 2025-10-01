@@ -1,6 +1,6 @@
 {
     "name": "RinaBullet",
-    "rootNamespace": "RinaInput",
+    "rootNamespace": "RinaBullet",
     "references": [
         "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
         "GUID:92b68a3bbc8c0486b9718b9503336cc4",

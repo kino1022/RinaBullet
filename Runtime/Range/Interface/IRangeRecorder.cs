@@ -11,12 +11,6 @@ namespace RinaBullet.Range.Interface
         /// 進行した距離
         /// </summary>
         /// <value></value>
-        float Range { get; }
-
-        /// <summary>
-        /// 監視用の進行距離
-        /// </summary>
-        /// <value></value>
-        Observable<float> RangeStream { get; }
+        ReadOnlyReactiveProperty<float> Range { get; }
     }
 }

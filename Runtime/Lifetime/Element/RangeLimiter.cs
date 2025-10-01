@@ -9,7 +9,7 @@ using R3;
 namespace RinaBullet.Lifetime.Element
 {
     [Serializable]
-    public class RangeLimitter : ABulletLifetimeElement
+    public class RangeLimiter : ABulletLifetimeElement
     {
         [SerializeField]
         [LabelText("最大距離")]
@@ -34,12 +34,11 @@ namespace RinaBullet.Lifetime.Element
                     ?? throw new NullReferenceException();
         }
 
-        private void RegisterStream()
-        {
+        private void RegisterStream() {
             m_rangeRecorder
-                .RangeStream
+                .Range
                 .Where(x => x <= m_maxRange)
-                .Subscribe(_ => OnDead());
+                .Subscribe(x => IsDead());
         }
     }
 }
