@@ -1,6 +1,6 @@
 {
     "name": "RinaBullet.Editor",
-    "rootNamespace": "RinaInput.Editor",
+    "rootNamespace": "RinaBullet.Editor",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
