@@ -7,7 +7,7 @@ namespace RinaBullet.Direction {
         
         Vector3 Direction { get; }
         
-        void Initialize(IObjectResolver resolver);
+        void Initialize(IObjectResolver resolver, GameObject bullet);
         
     }
 }

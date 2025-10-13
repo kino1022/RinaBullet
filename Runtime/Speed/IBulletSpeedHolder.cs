@@ -1,3 +1,4 @@
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -6,7 +7,7 @@ namespace RinaBullet.Speed {
         
         float Speed { get; }
         
-        void Initialize(IObjectResolver resolver);
+        void Initialize(IObjectResolver resolver, GameObject bullet);
         
     }
 }

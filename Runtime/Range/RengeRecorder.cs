@@ -1,53 +1,42 @@
 using System;
 using R3;
 using RinaBullet.Range.Interface;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace RinaBullet.Range {
     [Serializable]
-    public class RengeRecorder : IRangeRecorder, IDisposable{
-
-        private GameObject m_obj;
+    public class RengeRecorder :SerializedMonoBehaviour, IRangeRecorder {
         
-        private Vector3 m_originPosition = Vector3.zero;
-
-        private ReactiveProperty<float> m_range = new ReactiveProperty<float>();
+        private Vector3 m_origin;
+        
+        private ReactiveProperty<float> m_range;
         
         private CompositeDisposable m_disposable = new CompositeDisposable();
         
         public ReadOnlyReactiveProperty<float> Range => m_range;
 
-        public RengeRecorder(GameObject obj) {
-            m_obj = obj ?? throw new ArgumentNullException();
-            
-            //原点を保存
-            m_originPosition = m_obj.transform.position;
-
-            m_disposable = new CompositeDisposable();
-            
-            m_range = CreateProperty();
+        private void Awake() {
+            m_range = new ReactiveProperty<float>();
+            //原点の保存処理
+            m_origin = transform.position;
+            //座標変化の監視処理
+            RegisterChangeTransform();
         }
 
-        public void Dispose() {
+        private void OnDestroy() {
             m_disposable?.Dispose();
         }
 
-        private ReactiveProperty<float> CreateProperty() {
-            
-            var property = new ReactiveProperty<float>();
+        private void RegisterChangeTransform() {
+            m_disposable = new CompositeDisposable();
 
             var stream = Observable
-                .EveryValueChanged(m_obj.transform, x => x.position)
+                .EveryValueChanged(gameObject.transform, x => x.position)
                 .Subscribe(x => {
-                    property.Value = CalculateRange(x);
+                    m_range.Value = Vector3.Distance(m_origin, x);
                 })
                 .AddTo(m_disposable);
-
-            return property;
-        }
-        
-        private float CalculateRange(Vector3 position) {
-            return Vector3.Distance(m_originPosition, position);
         }
     }
 }
