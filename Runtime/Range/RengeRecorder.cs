@@ -31,7 +31,7 @@ namespace RinaBullet.Range {
         private void RegisterChangeTransform() {
             m_disposable = new CompositeDisposable();
 
-            var stream = Observable
+            Observable
                 .EveryValueChanged(gameObject.transform, x => x.position)
                 .Subscribe(x => {
                     m_range.Value = Vector3.Distance(m_origin, x);
