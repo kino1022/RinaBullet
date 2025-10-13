@@ -17,16 +17,10 @@ namespace RinaBullet.Installer {
         private IContextContainer m_contextContainer;
 
         public void Install(IContainerBuilder builder) {
-            if (m_shooter == null) {
-                m_shooter = gameObject.transform.root.GetComponentInChildren<IBulletShooter>();
-            }
 
-            builder.RegisterComponent(m_shooter);
-
-            if (m_contextContainer == null) {
-                m_contextContainer = gameObject.transform.root.GetComponentInChildren<IContextContainer>();
-            }
-
+            builder
+                .RegisterComponent(m_shooter);
+            
             builder
                 .RegisterComponent(m_contextContainer);
         }
