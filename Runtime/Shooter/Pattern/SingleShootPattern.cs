@@ -10,6 +10,8 @@ namespace RinaBullet.Shooter.Pattern {
     [CreateAssetMenu(menuName = "RinaBullet/ShootPattern/単発")]
     public class SingleShootPattern : SerializedScriptableObject, IShootPattern {
 
+        [SerializeField]
+        [LabelText("ばらけ具合")]
         private float m_randomizeAngle = 0.0f;
 
         public void Shoot(Bullet prefab, IObjectResolver resolver, Vector3 pos, Quaternion rot) {

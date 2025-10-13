@@ -11,9 +11,11 @@ namespace RinaBullet.Shooter.Pattern {
     [CreateAssetMenu(menuName = "RinaBullet/ShootPattern/散弾")]
     public class PelletPattern : SerializedScriptableObject, IShootPattern {
 
+        [SerializeField]
         [LabelText("同時発射数")] [ProgressBar(0, 30)]
         private int m_pelletAmount = 12;
 
+        [SerializeField]
         [LabelText("弾幕散布界")] [ProgressBar(0.0f, 90.0f)]
         private float m_spreadAngle = 12.0f;
 
