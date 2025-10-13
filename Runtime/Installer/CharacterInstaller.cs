@@ -21,17 +21,14 @@ namespace RinaBullet.Installer {
                 m_shooter = gameObject.transform.root.GetComponentInChildren<IBulletShooter>();
             }
 
-            builder
-                .RegisterComponent(m_shooter)
-                .As<IBulletShooter>();
+            builder.RegisterComponent(m_shooter);
 
             if (m_contextContainer == null) {
                 m_contextContainer = gameObject.transform.root.GetComponentInChildren<IContextContainer>();
             }
-            
+
             builder
-                .RegisterComponent(m_contextContainer)
-                .As<IContextContainer>();
+                .RegisterComponent(m_contextContainer);
         }
     }
 }
