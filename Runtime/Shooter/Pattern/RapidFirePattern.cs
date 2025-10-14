@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace RinaBullet.Shooter.Pattern {
     [CreateAssetMenu(menuName = "RinaBullet/ShootPattern/連射")]
-    public class RapidFirePattern : SerializedScriptableObject, IShootPattern {
+    public class RapidFirePattern : AShootPattern, IShootPattern {
 
         [SerializeField]
         [LabelText("発射間隔")]
@@ -20,11 +20,7 @@ namespace RinaBullet.Shooter.Pattern {
         [LabelText("発射数")]
         private int m_amount = 10;
 
-        [SerializeField]
-        [LabelText("散布界")]
-        private float m_spreadAngle = 0.0f;
-
-        public void Shoot([NotNull] Bullet prefab, [NotNull] IObjectResolver resolver, Vector3 pos, Quaternion rot) {
+        public override void Shoot([NotNull] Bullet prefab, [NotNull] IObjectResolver resolver, Vector3 pos, Quaternion rot) {
             if (prefab == null) throw new ArgumentNullException(nameof(prefab));
             if (resolver == null) throw new ArgumentNullException(nameof(resolver));
             RapidFire(prefab, resolver, pos, rot).Forget();
@@ -36,15 +32,10 @@ namespace RinaBullet.Shooter.Pattern {
                 resolver.Instantiate(
                     prefab,
                     pos,
-                    rot * CalculateRandomAngle() * prefab.transform.rotation
+                    rot * CalculateSpread() * prefab.transform.rotation
                 );
             }
         }
         
-        private Quaternion CalculateRandomAngle() {
-            float z = Random.Range(0.0f, 360.0f);
-            float y = Random.Range(0.0f, m_spreadAngle / 2.0f);
-            return Quaternion.Euler(0.0f, y, z);
-        }
     }
 }

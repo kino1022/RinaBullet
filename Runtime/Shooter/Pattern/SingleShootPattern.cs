@@ -8,13 +8,10 @@ using Random = UnityEngine.Random;
 
 namespace RinaBullet.Shooter.Pattern {
     [CreateAssetMenu(menuName = "RinaBullet/ShootPattern/単発")]
-    public class SingleShootPattern : SerializedScriptableObject, IShootPattern {
+    public class SingleShootPattern : AShootPattern, IShootPattern {
+        
 
-        [SerializeField]
-        [LabelText("ばらけ具合")]
-        private float m_randomizeAngle = 0.0f;
-
-        public void Shoot(Bullet prefab, IObjectResolver resolver, Vector3 pos, Quaternion rot) {
+        public override void Shoot(Bullet prefab, IObjectResolver resolver, Vector3 pos, Quaternion rot) {
 
             if (prefab is null) {
                 throw new ArgumentNullException();
@@ -27,14 +24,9 @@ namespace RinaBullet.Shooter.Pattern {
             resolver.Instantiate(
                 prefab,
                 pos,
-                CalculateRandomAngle() * rot * prefab.transform.rotation
+                CalculateSpread() * rot * prefab.transform.rotation
                 );
         }
-
-        private Quaternion CalculateRandomAngle() {
-            float z = Random.Range(0.0f, 360.0f);
-            float y = Random.Range(0.0f, m_randomizeAngle / 2.0f);
-            return Quaternion.Euler(0.0f, y, z);
-        }
+        
     }
 }
