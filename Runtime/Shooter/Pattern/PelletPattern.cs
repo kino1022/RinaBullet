@@ -27,7 +27,7 @@ namespace RinaBullet.Shooter.Pattern {
                 resolver.Instantiate(
                     prefab,
                     pos,
-                    rot * CalculateRandomAngle()
+                    rot * CalculateRandomAngle() * prefab.transform.rotation
                 );
             }
         }
