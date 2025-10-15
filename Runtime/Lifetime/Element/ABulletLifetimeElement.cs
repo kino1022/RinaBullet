@@ -5,6 +5,7 @@ using VContainer;
 
 namespace RinaBullet.Lifetime.Element
 {
+    [Serializable]
     public abstract class ABulletLifetimeElement : IBulletLifetimeElement
     {
 
