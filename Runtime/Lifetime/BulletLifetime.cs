@@ -24,23 +24,19 @@ namespace RinaBullet.Lifetime
             m_resolver = resolver ?? throw new ArgumentNullException();
         }
 
-        private void Start()
-        {
-
+        private void Start() {
+            m_elements.ForEach(x => x.Initialize(gameObject, m_resolver));
         }
 
-        private void RegisterOnDead()
-        {
+        private void RegisterOnDead() {
             m_elements.ForEach(x => x.IsDead += OnDead);
         }
 
-        private void DisRegisterOnDead()
-        {
+        private void DisRegisterOnDead() {
             m_elements.ForEach(x => x.IsDead -= OnDead);
         }
 
-        private void OnDead()
-        {
+        private void OnDead() {
             GameObject.Destroy(gameObject);
         }
     }

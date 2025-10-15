@@ -1,5 +1,6 @@
 using System;
 using RinaBullet.Lifetime.Element.Interface;
+using UnityEngine;
 using VContainer;
 
 namespace RinaBullet.Lifetime.Element
@@ -9,11 +10,15 @@ namespace RinaBullet.Lifetime.Element
 
         protected IObjectResolver m_resolver;
 
+        protected GameObject m_bullet;
+
         public Action IsDead { get; set; }
 
-        public void Initialize(IObjectResolver resolver)
+        public void Initialize(GameObject bullet,IObjectResolver resolver)
         {
             m_resolver = resolver ?? throw new ArgumentNullException();
+            
+            m_bullet = bullet ?? throw new ArgumentNullException();
         }
 
         public virtual void Start()
@@ -33,6 +38,7 @@ namespace RinaBullet.Lifetime.Element
         {
 
         }
+        
         /// <summary>
         /// フィールドのIObjectResolverを利用して依存制の解決を行うメソッド
         /// </summary>

@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -15,6 +16,6 @@ namespace RinaBullet.Lifetime.Element.Interface
         /// <value></value>
         Action IsDead { get; set; }
 
-        void Initialize(IObjectResolver resolver);
+        void Initialize(GameObject bullet,IObjectResolver resolver);
     }
 }
