@@ -15,6 +15,11 @@ namespace RinaBullet.Range {
         private CompositeDisposable m_disposable = new CompositeDisposable();
         
         public ReadOnlyReactiveProperty<float> Range => m_range;
+        
+        [ShowInInspector]
+        [ReadOnly]
+        [LabelText("現在距離")]
+        public float CurrentRange => m_range.Value;
 
         private void Awake() {
             m_range = new ReactiveProperty<float>();
