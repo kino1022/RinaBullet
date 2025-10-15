@@ -1,5 +1,6 @@
 using System;
 using RinaBullet.Collision;
+using RinaBullet.Range.Interface;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace RinaBullet.Lifetime.Element {
         public override void Start() {
             base.Start();
             
-            var callBackManager = m_bullet.transform.root.GetComponentInParent<ICollisionCallBackManager>()
+            var callBackManager = m_bullet.transform.root.GetComponentInChildren<ICollisionCallBackManager>()
                 ?? m_bullet.AddComponent<CollisionCallBackManager>();
             
             callBackManager.Add(this);
