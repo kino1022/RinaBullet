@@ -16,7 +16,7 @@ namespace RinaBullet.Lifetime
         [LabelText("消滅条件")]
         private List<IBulletLifetimeElement> m_elements = new()
         {
-            new TimeLimitter(),
+            new TimeLimiter(),
         };
 
         private IObjectResolver m_resolver;

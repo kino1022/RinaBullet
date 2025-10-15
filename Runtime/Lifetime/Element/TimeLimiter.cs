@@ -8,7 +8,7 @@ namespace RinaBullet.Lifetime.Element
     /// 一定時間で消滅する弾丸に対して適用する
     /// </summary>
     [Serializable]
-    public class TimeLimitter : ABulletLifetimeElement
+    public class TimeLimiter : ABulletLifetimeElement
     {
 
         [SerializeField]

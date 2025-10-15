@@ -4,6 +4,7 @@ using VContainer;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using R3;
+using Sirenix.Serialization;
 
 namespace RinaBullet.Lifetime.Element
 {
@@ -15,6 +16,7 @@ namespace RinaBullet.Lifetime.Element
         private float m_maxRange = 1000.0f;
 
         [TitleGroup("参照")]
+        [OdinSerialize]
         [ReadOnly]
         private IRangeRecorder m_rangeRecorder;
 
@@ -36,7 +38,7 @@ namespace RinaBullet.Lifetime.Element
         private void RegisterStream() {
             m_rangeRecorder
                 .Range
-                .Where(x => x <= m_maxRange)
+                .Where(x => x >= m_maxRange)
                 .Subscribe(x => IsDead());
         }
     }
