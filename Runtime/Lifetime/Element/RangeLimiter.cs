@@ -31,8 +31,9 @@ namespace RinaBullet.Lifetime.Element
         {
             base.ResolveDependency();
 
-            m_rangeRecorder = m_bullet.transform.root.GetComponentInChildren<IRangeRecorder>()
-                    ?? throw new NullReferenceException();
+            m_rangeRecorder = m_bullet.transform.root
+                                  .GetComponentInChildren<IRangeRecorder>() 
+                              ?? throw new NullReferenceException();
         }
 
         private void RegisterStream() {
