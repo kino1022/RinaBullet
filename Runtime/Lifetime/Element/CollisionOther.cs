@@ -19,12 +19,14 @@ namespace RinaBullet.Lifetime.Element {
             
             var callBackManager = m_bullet.transform.root.GetComponentInChildren<ICollisionCallBackManager>()
                 ?? m_bullet.AddComponent<CollisionCallBackManager>();
-            
-            callBackManager.Add(this);
+
+            callBackManager.AddOnCollision(this);
         }
 
         public void OnCollisionEnterCallBack(UnityEngine.Collision other) {
+            
             IsDead?.Invoke();
+            
         }
         
     }
