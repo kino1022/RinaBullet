@@ -17,8 +17,27 @@ namespace RinaBullet.Lifetime.Element
         [ProgressBar(0.0f, 100.0f)]
         private float duration = 10.0f;
 
+        public override void Start() {
+            base.Start();
+            AsyncCount().Forget();
+        }
+
         private async UniTask AsyncCount() {
-            
+
+            var token = m_bullet.GetCancellationTokenOnDestroy();
+
+            try {
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(duration),
+                    cancellationToken: token
+                    );
+            }
+            catch (OperationCanceledException) {
+                
+            }
+            finally {
+                IsDead?.Invoke();
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ namespace RinaBullet.Lifetime.Element
             m_rangeRecorder
                 .Range
                 .Where(x => x >= m_maxRange)
-                .Subscribe(x => IsDead());
+                .Subscribe(_ => IsDead?.Invoke());
         }
     }
 }
