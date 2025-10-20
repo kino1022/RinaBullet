@@ -28,7 +28,8 @@ namespace RinaBullet.Lifetime
         }
 
         private void Start() {
-            m_elements.ForEach(x => x.Initialize(gameObject, m_resolver));
+            m_elements.ForEach(x => x?.Initialize(gameObject, m_resolver));
+            m_elements.ForEach(x => x?.Start());
             RegisterOnDead();
         }
 

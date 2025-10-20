@@ -23,19 +23,14 @@ namespace RinaBullet.Lifetime.Element
         public override void Start()
         {
             base.Start();
-
-            RegisterStream();
-        }
-
-        protected override void ResolveDependency()
-        {
-            base.ResolveDependency();
-
+            
             m_rangeRecorder = m_bullet.transform.root
                                   .GetComponentInChildren<IRangeRecorder>() 
                               ?? throw new NullReferenceException();
-        }
 
+            RegisterStream();
+        }
+        
         private void RegisterStream() {
             m_rangeRecorder
                 .Range

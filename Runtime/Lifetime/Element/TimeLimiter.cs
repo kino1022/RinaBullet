@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -16,8 +17,7 @@ namespace RinaBullet.Lifetime.Element
         [ProgressBar(0.0f, 100.0f)]
         private float duration = 10.0f;
 
-        protected void StartCount()
-        {
+        private async UniTask AsyncCount() {
             
         }
     }

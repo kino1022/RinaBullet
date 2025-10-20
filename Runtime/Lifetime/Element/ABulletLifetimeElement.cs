@@ -24,7 +24,7 @@ namespace RinaBullet.Lifetime.Element
 
         public virtual void Start()
         {
-            ResolveDependency();
+            
         }
 
         public virtual void Dispose()
@@ -40,12 +40,5 @@ namespace RinaBullet.Lifetime.Element
 
         }
         
-        /// <summary>
-        /// フィールドのIObjectResolverを利用して依存制の解決を行うメソッド
-        /// </summary>
-        protected virtual void ResolveDependency()
-        {
-
-        }
     }
 }
