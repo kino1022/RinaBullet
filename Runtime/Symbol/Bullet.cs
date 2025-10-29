@@ -31,7 +31,7 @@ namespace RinaBullet.Symbol {
             
             m_container = m_resolver.Resolve<IContextContainer>();
             
-            m_contexts = m_container.Contexts;
+            m_contexts = new List<IBulletContext>(m_container.Contexts);
 
             if (m_contexts is null || m_contexts.Count is 0) {
                 foreach (var context in m_contexts) {
