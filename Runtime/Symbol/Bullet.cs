@@ -31,11 +31,12 @@ namespace RinaBullet.Symbol {
             
             m_contexts = new List<IBulletContext>(m_container.Contexts);
 
-            if (m_contexts is null || m_contexts.Count is 0) {
+            if (m_contexts is not null && m_contexts.Count is not 0) {
                 foreach (var context in m_contexts) {
                     context.Apply(gameObject);
                 }
             }
+            
         }
 
     }
