@@ -25,10 +25,8 @@ namespace RinaBullet.Symbol {
         [Inject]
         public void Construct(IObjectResolver resolver) {
             m_resolver = resolver ?? throw new ArgumentNullException();
-        }
-
-        protected virtual void Start() {
             
+                        
             m_container = m_resolver.Resolve<IContextContainer>();
             
             m_contexts = new List<IBulletContext>(m_container.Contexts);
@@ -39,5 +37,6 @@ namespace RinaBullet.Symbol {
                 }
             }
         }
+
     }
 }
