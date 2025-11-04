@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+using RinaBullet.Context.Container;
 using RinaBullet.Symbol;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -20,12 +22,18 @@ namespace RinaBullet.Shooter.Pattern {
             if (resolver is null) {
                 throw new ArgumentNullException();
             }
+            
+            var container = resolver.Resolve<IContextContainer>();
+            
+            var contexts = container?.Contexts;
 
-            resolver.Instantiate(
+            var instance = resolver.Instantiate(
                 prefab,
                 pos,
                 CalculateSpread() * rot * prefab.transform.rotation
-                );
+            );
+            
+            instance.InitializeContext(contexts);
         }
         
     }

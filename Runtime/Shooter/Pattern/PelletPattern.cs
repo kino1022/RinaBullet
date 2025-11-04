@@ -1,5 +1,7 @@
 using System;
 using JetBrains.Annotations;
+using RinaBullet.Context;
+using RinaBullet.Context.Container;
 using RinaBullet.Symbol;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -19,12 +21,18 @@ namespace RinaBullet.Shooter.Pattern {
             if (prefab == null) throw new ArgumentNullException(nameof(prefab));
             if (resolver == null) throw new ArgumentNullException(nameof(resolver));
 
+            var container = resolver.Resolve<IContextContainer>() ?? throw new NullReferenceException();
+
+            var contexts = container.Contexts;
+
             for (int i = 0; i < m_pelletAmount; i++) {
-                resolver.Instantiate(
+                var instance = resolver.Instantiate(
                     prefab,
                     pos,
                     rot * prefab.transform.rotation * CalculateSpread()
                 );
+                
+                instance.InitializeContext(contexts);
             }
         }
     }

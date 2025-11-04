@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using RinaBullet.Context.Container;
 using RinaBullet.Symbol;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -27,13 +28,20 @@ namespace RinaBullet.Shooter.Pattern {
         }
 
         private async UniTask RapidFire(Bullet prefab, IObjectResolver resolver, Vector3 pos, Quaternion rot) {
+
+            var container = resolver.Resolve<IContextContainer>() ?? throw new NullReferenceException();
+            
+            var contexts = container.Contexts;
+            
             for (int i = 0; i < m_amount; ++i) {
                 await UniTask.Delay(TimeSpan.FromSeconds(m_interval));
-                resolver.Instantiate(
+                var instance = resolver.Instantiate(
                     prefab,
                     pos,
                     rot * CalculateSpread() * prefab.transform.rotation
                 );
+                
+                instance.InitializeContext(contexts);
             }
         }
         
