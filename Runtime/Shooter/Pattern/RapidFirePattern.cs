@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using RinaBullet.Context;
 using RinaBullet.Context.Container;
 using RinaBullet.Symbol;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -20,18 +23,23 @@ namespace RinaBullet.Shooter.Pattern {
         [SerializeField]
         [LabelText("発射数")]
         private int m_amount = 10;
+        
+        [OdinSerialize]
+        [ReadOnly]
+        private IReadOnlyList<IBulletContext> m_contexts;
 
         public override void Shoot([NotNull] Bullet prefab, [NotNull] IObjectResolver resolver, Vector3 pos, Quaternion rot) {
             if (prefab == null) throw new ArgumentNullException(nameof(prefab));
             if (resolver == null) throw new ArgumentNullException(nameof(resolver));
+            
+            var container = resolver.Resolve<IContextContainer>() ?? throw new NullReferenceException();
+
+            m_contexts = container.Contexts;
+            
             RapidFire(prefab, resolver, pos, rot).Forget();
         }
 
         private async UniTask RapidFire(Bullet prefab, IObjectResolver resolver, Vector3 pos, Quaternion rot) {
-
-            var container = resolver.Resolve<IContextContainer>() ?? throw new NullReferenceException();
-            
-            var contexts = container.Contexts;
             
             for (int i = 0; i < m_amount; ++i) {
                 await UniTask.Delay(TimeSpan.FromSeconds(m_interval));
@@ -41,7 +49,7 @@ namespace RinaBullet.Shooter.Pattern {
                     rot * CalculateSpread() * prefab.transform.rotation
                 );
                 
-                instance.InitializeContext(contexts);
+                instance.InitializeContext(m_contexts);
             }
         }
         
