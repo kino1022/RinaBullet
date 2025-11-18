@@ -35,17 +35,13 @@ namespace RinaBullet.Direction.State {
         }
 
         private void TransitionNextState() {
-            for (int i = _currentIndex; i < _states.Count; i++) {
-                var nextIndex = i + 1;
-                if (nextIndex >= _states.Count) {
-                    return;
-                }
-            }
+            
         }
 
         protected void TransitionState(int index) {
             
         }
+        
 
         protected void RegisterTransitionRequest(IDirectionState state) {
             state
