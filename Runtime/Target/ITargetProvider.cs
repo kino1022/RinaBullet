@@ -8,5 +8,6 @@ namespace RinaBullet.Target {
     public interface ITargetProvider {
         
         ReadOnlyReactiveProperty<GameObject> Target { get; }
+        
     }
 }

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using RinaBullet.Direction;
+using RinaBullet.Move.Modifiier;
 using RinaBullet.Speed;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -9,51 +11,77 @@ using VContainer;
 namespace RinaBullet.Move {
     [RequireComponent(typeof(Rigidbody))]
     public class BulletMoveExecutor : SerializedMonoBehaviour {
+        
+        [Title("参照")]
 
         [OdinSerialize]
-        private IBulletSpeedHolder m_speed;
+        [LabelText("進行方向管理")]
+        private IBulletDirectionHolder _direction;
+        
+        [OdinSerialize]
+        [LabelText("速度管理")]
+        private IBulletSpeedHolder _speed;
 
         [OdinSerialize]
-        private IBulletDirectionHolder m_direction;
+        [LabelText("移動補正")]
+        private List<IMoveModifier> _modifiers = new();
         
-        [SerializeField]
-        private Rigidbody m_rigidbody;
-        
-        [SerializeField]
-        private Vector3 m_totalVelocity = Vector3.zero;
-        
-        private IObjectResolver m_resolver;
-
-        [Inject]
-        public void Construct(IObjectResolver resolver) {
-            m_resolver = resolver ?? throw new ArgumentNullException();
-        }
+        [OdinSerialize]
+        [LabelText("")]
+        [ReadOnly]
+        private Rigidbody _rigidbody;
 
         private void Awake() {
-
-            if (m_speed is null) {
-                throw new NullReferenceException();
-            }
-
-            if (m_direction is null) {
-                throw new NullReferenceException();
-            }
-
-            m_speed?.Initialize(m_resolver, gameObject);
-            m_direction?.Initialize(m_resolver, gameObject);
+            
+            Debug.Assert(_direction is null);
+            
+            Debug.Assert(_speed is null);
+            
         }
 
         private void Start() {
-            m_speed?.Start();
-            m_direction?.Start();
-
-            m_rigidbody = transform.root.GetComponentInChildren<Rigidbody>();
-        }
-        
-        public void FixedUpdate() {
-            m_totalVelocity = m_direction.Direction.normalized * m_speed.Speed;
             
-            m_rigidbody.linearVelocity = m_totalVelocity;
+            _rigidbody = gameObject.transform.root.GetComponentInChildren<Rigidbody>();
+            
+            _rigidbody ??= gameObject.AddComponent<Rigidbody>();
+            
+            _rigidbody.useGravity = false;
+            
         }
+
+        private void Update() {
+            
+            var movement = CalculateMovement();
+            
+            movement = ApplyModifier(movement);
+            
+            _rigidbody.linearVelocity = movement;
+            
+        }
+
+        private Vector3 CalculateMovement() {
+            
+            var result = Vector3.zero;
+            
+            result += _direction.Direction.normalized * _speed.Speed;
+
+            return result;
+            
+        }
+
+        private Vector3 ApplyModifier(Vector3 movement) {
+            var result = movement;
+            
+            if (_modifiers is null || _modifiers.Count is 0) {
+                return result;
+            }
+
+            foreach (var modifier in _modifiers) {
+                result += modifier.Movement;
+            }
+            
+            return result;
+        }
+
     }
 }
